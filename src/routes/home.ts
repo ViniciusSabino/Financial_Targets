@@ -1,15 +1,15 @@
 import Router from 'koa-joi-router';
 
-import home from '../controllers/home';
+import homeController from '../controllers/home';
 
 const router = Router();
 
-router.prefix('/home');
+router.prefix('/api/public');
 
 router.route({
     method: 'GET',
-    path: '/accounts',
-    handler: home,
+    path: '/home',
+    handler: homeController,
 });
 
 export default router;

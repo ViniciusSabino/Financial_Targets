@@ -1,14 +1,12 @@
 /* eslint-disable no-console */
+
 import chalk from 'chalk';
 import mongoose from 'mongoose';
 
 import config from '../../config';
 
-const createConnection = () => {
-    mongoose.connect(config.mongodb.connection, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    });
+const createConnection = (): void => {
+    mongoose.connect(config.mongodb.connection);
 
     const db = mongoose.connection;
 

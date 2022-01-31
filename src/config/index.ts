@@ -1,7 +1,7 @@
 const { env } = process;
 
 export default {
-    name: 'Financal Targets - Accounts API',
+    name: 'Financial Targets - Accounts API',
     environment: env.NODE_ENV || 'development',
     port: Number(env.PORT) || 8080,
     mongodb: {
