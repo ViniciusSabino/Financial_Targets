@@ -10,7 +10,7 @@
         "test": "jest --expand --detect-open-handles",
         "test:ci": "jest -u --ci --coverage --watchAll=false",
         "clean": "rm -r ./dist",
-        "dev": "ts-node-dev -r dotenv/config --ignore-watch node_modules src/server.ts",
+        "dev": "ts-node-dev -r dotenv/config src/server.ts",
         "type-check": "tsc --noEmit",
         "type-check:watch": "npm run type-check -- --watch",
         "lint": "eslint . --ext .ts"

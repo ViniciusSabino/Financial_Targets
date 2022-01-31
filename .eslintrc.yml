@@ -35,7 +35,7 @@ rules:
   max-statements-per-line: 2
   max-nested-callbacks: [2, 5] # default => 3
   max-len: [1, code: 150]
-  no-unused-vars: 2
+  no-unused-vars: 0
   no-alert: 2
   no-caller: 2
   no-console: 1
@@ -66,3 +66,5 @@ rules:
   linebreak-style: [1, unix]
   no-plusplus: 2
   "@typescript-eslint/no-unused-vars": 2
+  no-shadow: 0
+  "@typescript-eslint/no-shadow": 2
