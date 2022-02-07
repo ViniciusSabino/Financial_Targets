@@ -3,8 +3,9 @@ import { Router } from 'koa-joi-router';
 
 import homeRouter from './home';
 import balancesRouter from './balances';
+import accountsRouter from './accounts';
 
-const publicRoutes = [homeRouter, balancesRouter];
+const publicRoutes = [homeRouter, balancesRouter, accountsRouter];
 const privateRoutes: Array<Router> = [];
 
 export default {

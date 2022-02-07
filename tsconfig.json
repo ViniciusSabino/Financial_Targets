@@ -20,6 +20,10 @@
       "noImplicitAny": true,
       "sourceMap": true,
       "types": ["node", "jest"],
+      "typeRoots": [
+          "./node_modules/@types",
+          "./node_modules/koa-body"
+      ]
     },
     "exclude": [
       "node_modules",
@@ -29,4 +33,3 @@
       "src/**/*"
     ],
   }
-  

@@ -1,21 +1,26 @@
-import { Schema } from 'mongoose';
+import { Document, model, Schema } from 'mongoose';
 
 import { AccountType } from '../../utils/enums/accounts';
-import UserSchema, { User } from './User';
 
-export interface Account {
-    id: string;
+export interface Account extends Document {
     name: string;
     type: AccountType;
     isMain: boolean;
-    user: User;
+    user: Schema.Types.ObjectId;
 }
 
-const AccountSchema = new Schema<Account>({
-    name: { type: String, required: true },
-    type: { type: String, required: true },
-    isMain: { type: Boolean, required: true },
-    user: { type: UserSchema, required: true },
-});
+const AccountSchema = new Schema<Account>(
+    {
+        name: { type: String, required: true },
+        type: { type: String, required: true },
+        isMain: { type: Boolean, required: true },
+        user: { type: Schema.Types.ObjectId, ref: 'User', index: true, required: true },
+    },
+    {
+        versionKey: false,
+    }
+);
 
-export default AccountSchema;
+const AccountModel = model<Account>('Account', AccountSchema);
+
+export default AccountModel;
