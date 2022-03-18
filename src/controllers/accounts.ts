@@ -1,27 +1,30 @@
 import { Context } from 'koa';
 
-import AccountModel from '../database/models/Account';
-import UserModel from '../database/models/User';
 import { AccountType } from '../utils/enums/accounts';
+import service, { CheckingAccount } from '../services/accounts/service';
 
 const createCheckingAccount = async (ctx: Context): Promise<void> => {
-    const userId = ctx.request.headers.userid;
+    const { userId } = ctx.user;
 
-    const user = await UserModel.findById(userId).lean();
-
-    const account = {
+    const checkingAccount: CheckingAccount = {
         name: ctx.request.body.name,
         type: AccountType.CHECKING_ACCOUNT,
         isMain: ctx.request.body.isMain,
-        user,
     };
 
-    const model = new AccountModel(account);
-
-    const createdAccount = await model.save();
+    const createdAccount = await service.createCheckingAccount(userId, checkingAccount);
 
     ctx.status = 200;
     ctx.body = createdAccount;
 };
 
-export default { createCheckingAccount };
+const listAllAccounts = async (ctx: Context): Promise<void> => {
+    const { userId } = ctx.user;
+
+    const accounts = await service.listAllAccounts(userId);
+
+    ctx.status = 200;
+    ctx.body = accounts;
+};
+
+export default { createCheckingAccount, listAllAccounts };

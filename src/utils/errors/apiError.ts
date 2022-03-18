@@ -1,0 +1,43 @@
+import ErrorType from '../enums/errorType';
+
+export interface ExtendedError {
+    name: string;
+    message: string;
+    status: number;
+    stacktrace: string;
+    type: ErrorType;
+}
+
+export class ApiError extends Error {
+    status;
+    stacktrace;
+    type;
+
+    constructor(params: ExtendedError) {
+        super();
+
+        Error.call(this);
+        Error.captureStackTrace(this, this.constructor);
+
+        this.name = params.name || this.constructor.name;
+        this.message = params.message || 'There was an unexpected error. Please try again';
+        this.status = params.status || 500;
+        this.stacktrace = params.stacktrace;
+        this.type = params.type;
+    }
+
+    toJSON() {
+        return {
+            error: {
+                name: this.name,
+                message: this.message,
+                stacktrace: this.stacktrace,
+                type: this.type,
+            },
+        };
+    }
+}
+
+export default (params: ExtendedError) => {
+    throw new ApiError(params);
+};

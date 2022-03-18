@@ -1,5 +1,6 @@
 import { Context } from 'koa';
 
+import service, { BalanceEntries } from '../services/balances/service';
 import { CurrentBalanceTypes } from '../utils/enums/balances';
 import { Months } from '../utils/enums/date';
 
@@ -46,4 +47,15 @@ const current = (ctx: Context): void => {
     ctx.body = CURRENT_BALANCES_DATA;
 };
 
-export default { current };
+const create = async (ctx: Context) => {
+    const { accountId, month, year, value } = ctx.request.body;
+
+    const balanceEntries: BalanceEntries = { accountId, month, year, value };
+
+    const createdBalance = await service.create(balanceEntries);
+
+    ctx.status = 200;
+    ctx.body = createdBalance;
+};
+
+export default { current, create };
