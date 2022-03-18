@@ -7,12 +7,6 @@ module.exports = {
     coveragePathIgnorePatterns: [
         '/node_modules',
         '/__tests__',
-
-        '/src/database',
-        '/src/config',
-        '/src/routes',
-        '/src/server.js',
-        '/src/controllers/home.js',
     ],
     coverageThreshold: {
         global: {
@@ -26,12 +20,11 @@ module.exports = {
         name: '@financial-targets/accounts',
         color: 'red',
     },
-    moduleFileExtensions: ['js'],
+    moduleFileExtensions: ['ts', 'js'],
     name: '@financial-targets/accounts',
     testEnvironment: 'node',
+    testPathIgnorePatterns: ['/node_modules', '__tests__'],
     testMatch: ['**/src/**/*+(spec|test).[jt]s?(x)'],
-    transform: {
-        '^.+\\.[t|j]sx?$': 'babel-jest',
-    },
+    preset: 'ts-jest',
     verbose: true,
 };
