@@ -1,6 +1,10 @@
+import { Balance } from '../../database/models/Balance';
 import { Months } from '../../utils/enums/date';
+import ErrorType from '../../utils/enums/errorType';
+import extendedError from '../../utils/errors/extendedError';
 import { findAccountById } from '../accounts/queries';
-import { BalanceCreation, createBalance } from './queries';
+import { findUserById } from '../common/user/queries';
+import { BalanceCreation, createBalance, findCurrentBalancesByUser } from './queries';
 
 export interface BalanceEntries {
     accountId: string;
@@ -9,7 +13,13 @@ export interface BalanceEntries {
     value: number;
 }
 
-const create = async (balanceEntries: BalanceEntries) => {
+const getCurrentBalances = async (userId: string): Promise<Array<Balance>> => {
+    const curretBalances = await findCurrentBalancesByUser(userId);
+
+    return curretBalances;
+};
+
+const create = async (balanceEntries: BalanceEntries): Promise<Balance> => {
     try {
         const account = await findAccountById(balanceEntries.accountId);
 
@@ -23,7 +33,9 @@ const create = async (balanceEntries: BalanceEntries) => {
         const balance = await createBalance(balanceCreation);
 
         return balance;
-    } catch (err) {}
+    } catch (err) {
+        throw extendedError({ error: err as Error, type: ErrorType.CREATE_BALANCE_ERROR });
+    }
 };
 
-export default { create };
+export default { create, getCurrentBalances };

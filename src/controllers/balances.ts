@@ -4,23 +4,8 @@ import service, { BalanceEntries } from '../services/balances/service';
 import { CurrentBalanceTypes } from '../utils/enums/balances';
 import { Months } from '../utils/enums/date';
 
-export interface Balance {
-    id: number;
-    name: string;
-    type: CurrentBalanceTypes;
-    value: number;
-    isMain: boolean;
-}
-
-export interface CurrentBalancesResponse {
-    month: Months;
-    year: number;
-    accounts: Array<Balance>;
-    investments: Array<Balance>;
-}
-
-const current = (ctx: Context): void => {
-    const CURRENT_BALANCES_DATA: CurrentBalancesResponse = {
+const current = async (ctx: Context): Promise<void> => {
+    const CURRENT_BALANCES_DATA = {
         month: Months.JANUARY,
         year: 2022,
         accounts: [
@@ -43,8 +28,12 @@ const current = (ctx: Context): void => {
         ],
     };
 
+    const { userId } = ctx.user;
+
+    const currentBalances = await service.getCurrentBalances(userId);
+
     ctx.status = 200;
-    ctx.body = CURRENT_BALANCES_DATA;
+    ctx.body = currentBalances;
 };
 
 const create = async (ctx: Context) => {

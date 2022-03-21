@@ -24,6 +24,7 @@ const buildErrorObject = (details: ErrorDetails, err: Error): ExtendedError => (
 export default ({ error, type }: ErrorThrown) => {
     switch (type) {
         case ErrorType.VALIDATION_ERROR:
+            ErrorType.CREATE_BALANCE_ERROR;
             apiError(buildErrorObject({ message: error.message, status: HttpStatus.BAD_REQUEST, type }, error));
             break;
         case ErrorType.UNAUTHORIZED:
