@@ -1,7 +1,8 @@
 import { Document, model, Schema } from 'mongoose';
+import { Account } from './Account';
 
 export interface Balance extends Document {
-    account: Schema.Types.ObjectId;
+    account: Account;
     month: string;
     year: number;
     value: number;

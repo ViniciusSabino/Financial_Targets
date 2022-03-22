@@ -24,7 +24,7 @@ const authentication = async (ctx: Context, next: Next): Promise<void> => {
 
         await next();
     } catch (err) {
-        throw extendedError({ error: err as Error, type: ErrorType.UNAUTHORIZED });
+        throw extendedError({ error: err as Error, type: ErrorType.INTERNAL_ERROR });
     }
 };
 

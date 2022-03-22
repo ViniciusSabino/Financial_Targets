@@ -1,5 +1,10 @@
 import { Months } from '../enums/date';
 
+export interface DateInfo {
+    month: Months;
+    year: number;
+}
+
 const getMonthNameByNumber = (number: number): Months =>
     ({
         1: Months.JANUARY,

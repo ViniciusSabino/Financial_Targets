@@ -1,6 +1,6 @@
 import Router from 'koa-joi-router';
 
-import balancesController from '../controllers/balances';
+import controller from '../controllers/balances';
 
 const router = Router();
 
@@ -10,12 +10,12 @@ router.route([
     {
         method: 'GET',
         path: '/current',
-        handler: balancesController.current,
+        handler: controller.current,
     },
     {
         method: 'POST',
         path: '/create',
-        handler: balancesController.create,
+        handler: controller.create,
     },
 ]);
 

@@ -1,38 +1,47 @@
-import { Balance } from '../../database/models/Balance';
 import { Months } from '../../utils/enums/date';
 import ErrorType from '../../utils/enums/errorType';
 import extendedError from '../../utils/errors/extendedError';
+import { DateInfo, getCurrentMonthName, getCurrentYear } from '../../utils/helpers/date';
 import { findAccountById } from '../accounts/queries';
-import { findUserById } from '../common/user/queries';
+import { CurrentBalancesMapped, mapperCurrentBalances, BalanceMapped, mapperCreatedBalance } from './mapper';
 import { BalanceCreation, createBalance, findCurrentBalancesByUser } from './queries';
 
-export interface BalanceEntries {
+export interface BalanceInput {
     accountId: string;
     month: Months;
     year: number;
     value: number;
 }
 
-const getCurrentBalances = async (userId: string): Promise<Array<Balance>> => {
-    const curretBalances = await findCurrentBalancesByUser(userId);
+const getCurrentBalances = async (userId: string): Promise<CurrentBalancesMapped> => {
+    const dateInfo: DateInfo = {
+        month: getCurrentMonthName(),
+        year: getCurrentYear(),
+    };
 
-    return curretBalances;
+    const currentBalances = await findCurrentBalancesByUser(userId, dateInfo);
+
+    const mappedBalances = mapperCurrentBalances(currentBalances, dateInfo);
+
+    return mappedBalances;
 };
 
-const create = async (balanceEntries: BalanceEntries): Promise<Balance> => {
+const create = async (balanceInput: BalanceInput): Promise<BalanceMapped> => {
     try {
-        const account = await findAccountById(balanceEntries.accountId);
+        const account = await findAccountById(balanceInput.accountId);
 
         const balanceCreation: BalanceCreation = {
             account,
-            month: balanceEntries.month,
-            year: balanceEntries.year,
-            value: balanceEntries.value,
+            month: balanceInput.month,
+            year: balanceInput.year,
+            value: balanceInput.value,
         };
 
         const balance = await createBalance(balanceCreation);
 
-        return balance;
+        const balanceMapped = mapperCreatedBalance(balance);
+
+        return balanceMapped;
     } catch (err) {
         throw extendedError({ error: err as Error, type: ErrorType.CREATE_BALANCE_ERROR });
     }

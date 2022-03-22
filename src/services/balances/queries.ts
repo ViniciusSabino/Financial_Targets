@@ -1,8 +1,7 @@
 import { Account } from '../../database/models/Account';
 import BalanceModel, { Balance } from '../../database/models/Balance';
-import { User } from '../../database/models/User';
 import { Months } from '../../utils/enums/date';
-import { getCurrentMonthName, getCurrentYear } from '../../utils/helpers/date';
+import { DateInfo } from '../../utils/helpers/date';
 
 export interface BalanceCreation {
     account: Account;
@@ -11,12 +10,11 @@ export interface BalanceCreation {
     value: number;
 }
 
-const findCurrentBalancesByUser = async (userId: string): Promise<Array<Balance>> => {
-    const year = getCurrentYear();
-    const monthName = getCurrentMonthName();
+const findCurrentBalancesByUser = async (userId: string, dateInfo: DateInfo): Promise<Array<Balance>> => {
+    const { month, year } = dateInfo;
 
-    const currentBalances = await BalanceModel.find({ month: monthName, year })
-        .populate({ path: 'account', match: { user: userId, isMain: true } })
+    const currentBalances = await BalanceModel.find({ month, year })
+        .populate({ path: 'account', match: { user: userId } })
         .lean();
 
     return currentBalances as Array<Balance>;
