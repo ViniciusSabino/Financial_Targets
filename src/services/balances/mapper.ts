@@ -33,7 +33,7 @@ const mapperCurrentBalances = (currentBalances: Array<Balance>, dateInfo: DateIn
         name: balance.account.name,
         type:
             balance.account.type === AccountType.INVESTMENT
-                ? CurrentBalanceTypes.INVESTMENTS
+                ? CurrentBalanceTypes.INVESTMENT
                 : CurrentBalanceTypes.ACCOUNT,
         value: balance.value,
         isMain: balance.account.isMain,

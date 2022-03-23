@@ -1,6 +1,6 @@
 enum CurrentBalanceTypes {
     ACCOUNT = 'ACCOUNT',
-    INVESTMENTS = 'INVESTMENTS',
+    INVESTMENT = 'INVESTMENT',
 }
 
 export { CurrentBalanceTypes };
