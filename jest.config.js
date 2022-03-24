@@ -2,12 +2,9 @@ module.exports = {
     bail: true,
     clearMocks: true,
     collectCoverage: true,
-    collectCoverageFrom: ['src/**/*.{js,jsx}', '!**/node_modules/**'],
+    collectCoverageFrom: ['src/**/*.{ts,tsx}', '!**/node_modules/**'],
     coverageDirectory: '__tests__/coverage',
-    coveragePathIgnorePatterns: [
-        '/node_modules',
-        '/__tests__',
-    ],
+    coveragePathIgnorePatterns: ['/node_modules', '/__tests__'],
     coverageThreshold: {
         global: {
             statements: 100,

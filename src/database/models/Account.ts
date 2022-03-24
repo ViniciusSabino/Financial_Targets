@@ -1,9 +1,10 @@
-import { Document, model, Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 import { AccountType } from '../../utils/enums/accounts';
 import { User } from './User';
 
-export interface Account extends Document {
+export interface Account {
+    _id: string;
     name: string;
     type: AccountType;
     isMain: boolean;
