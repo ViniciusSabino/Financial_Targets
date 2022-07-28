@@ -9,18 +9,14 @@ export interface AccountMapped {
     userId: string;
 }
 
-const mapperAccounts = (input: Array<Account> | Account): Array<AccountMapped> | AccountMapped => {
-    const mapAccount = (account: Account) => ({
-        id: account._id,
-        name: account.name,
-        type: account.type,
-        isMain: account.isMain,
-        userId: account.user._id,
-    });
+const mapAccount = (account: Account): AccountMapped => ({
+    id: account._id,
+    name: account.name,
+    type: account.type,
+    isMain: account.isMain,
+    userId: account.user._id,
+});
 
-    if (Array.isArray(input)) return input.map((account) => mapAccount(account));
+const mapAccounts = (accounts: Array<Account>): Array<AccountMapped> => accounts.map((account) => mapAccount(account));
 
-    return mapAccount(input);
-};
-
-export { mapperAccounts };
+export { mapAccount, mapAccounts };

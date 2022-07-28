@@ -13,3 +13,5 @@ app.listen(config.port, () =>
  Running on port: ${chalk.blue(config.port)}
  Environment: ${chalk.blue(config.environment)}`)
 );
+
+export { app };

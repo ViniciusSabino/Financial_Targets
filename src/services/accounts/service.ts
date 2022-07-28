@@ -1,7 +1,7 @@
 import { findUserById } from '../common/user/queries';
 import { AccountType } from '../../utils/enums/accounts';
 import { AccountCreation, createAccount, getAllAccounts } from './queries';
-import { AccountMapped, mapperAccounts } from './mapper';
+import { AccountMapped, mapAccount, mapAccounts } from './mapper';
 
 export interface CheckingAccount {
     name: string;
@@ -9,27 +9,22 @@ export interface CheckingAccount {
     isMain: boolean;
 }
 
-const createCheckingAccount = async (
-    userId: string,
-    checkingAccount: CheckingAccount
-): Promise<AccountMapped | Array<AccountMapped>> => {
+const createCheckingAccount = async (checkingAccount: CheckingAccount, userId: string): Promise<AccountMapped> => {
     const user = await findUserById(userId);
 
     const accountCreation: AccountCreation = { ...checkingAccount, user };
 
-    const createdAccount = await createAccount(accountCreation);
+    const account = await createAccount(accountCreation);
 
-    const createdAccountMapped = mapperAccounts(createdAccount);
-
-    return createdAccountMapped;
+    return mapAccount(account);
 };
 
-const listAllAccounts = async (userId: string): Promise<Array<AccountMapped> | AccountMapped> => {
+const listAllAccounts = async (userId: string): Promise<Array<AccountMapped>> => {
     const user = await findUserById(userId);
 
     const accounts = await getAllAccounts(user);
 
-    const accountsMapped = mapperAccounts(accounts);
+    const accountsMapped = mapAccounts(accounts);
 
     return accountsMapped;
 };

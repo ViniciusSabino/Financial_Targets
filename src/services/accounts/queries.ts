@@ -18,9 +18,9 @@ const createAccount = async (accountCreation: AccountCreation): Promise<Account>
 };
 
 const getAllAccounts = async (user: User): Promise<Array<Account>> => {
-    const accounts = await AccountModel.find({ user }).lean();
+    const accounts: Array<Account> = await AccountModel.find({ user }).lean();
 
-    return accounts as Array<Account>;
+    return accounts;
 };
 
 const findAccountById = async (id: string): Promise<Account> => {

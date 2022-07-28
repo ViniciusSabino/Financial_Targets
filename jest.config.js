@@ -4,7 +4,7 @@ module.exports = {
     collectCoverage: true,
     collectCoverageFrom: ['src/**/*.{ts,tsx}', '!**/node_modules/**'],
     coverageDirectory: '__tests__/coverage',
-    coveragePathIgnorePatterns: ['/node_modules', '/__tests__'],
+    coveragePathIgnorePatterns: ['/node_modules', '/__tests__', 'src/config', 'src/database', 'src/routes'],
     coverageThreshold: {
         global: {
             statements: 100,

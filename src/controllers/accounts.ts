@@ -12,7 +12,7 @@ const createCheckingAccount = async (ctx: Context): Promise<void> => {
         isMain: ctx.request.body.isMain,
     };
 
-    const createdAccount = await service.createCheckingAccount(userId, checkingAccount);
+    const createdAccount = await service.createCheckingAccount(checkingAccount, userId);
 
     ctx.status = 200;
     ctx.body = createdAccount;
