@@ -1,10 +1,10 @@
-import { model, Schema } from 'mongoose';
+import { model, ObjectId, Schema } from 'mongoose';
 
 import { AccountType } from '../../utils/enums/accounts';
 import { User } from './User';
 
 export interface Account {
-    _id: string;
+    _id: ObjectId;
     name: string;
     type: AccountType;
     isMain: boolean;

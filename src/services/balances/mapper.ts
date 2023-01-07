@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongoose';
+
 import { Balance } from '../../database/models/Balance';
 import { AccountType } from '../../utils/enums/accounts';
 import { CurrentBalanceTypes } from '../../utils/enums/balances';
@@ -5,7 +7,8 @@ import { Months } from '../../utils/enums/date';
 import { DateInfo } from '../../utils/helpers/date';
 
 interface AccountMapped {
-    id: string;
+    id: ObjectId;
+    accountId: ObjectId;
     name: string;
     type: CurrentBalanceTypes;
     value: number;
@@ -20,8 +23,8 @@ export interface CurrentBalancesMapped {
 }
 
 export interface BalanceMapped {
-    id: string;
-    accountId: string;
+    id: ObjectId;
+    accountId: ObjectId;
     month: string;
     year: number;
     value: number;
@@ -30,6 +33,7 @@ export interface BalanceMapped {
 const mapperCurrentBalances = (currentBalances: Array<Balance>, dateInfo: DateInfo): CurrentBalancesMapped => {
     const mapAccountDetails = (balance: Balance): AccountMapped => ({
         id: balance._id,
+        accountId: balance.account._id,
         name: balance.account.name,
         type:
             balance.account.type === AccountType.INVESTMENT

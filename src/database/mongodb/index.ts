@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import config from '../../config';
 
 const createConnection = (): void => {
+    mongoose.set('strictQuery', true);
     mongoose.connect(config.mongodb.connection);
 
     const db = mongoose.connection;

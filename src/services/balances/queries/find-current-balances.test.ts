@@ -1,3 +1,6 @@
+import mongoose from 'mongoose';
+
+import { Balance } from '../../../database/models/Balance';
 import { AccountType } from '../../../utils/enums/accounts';
 import { Months } from '../../../utils/enums/date';
 import { DateInfo } from '../../../utils/helpers/date';
@@ -27,22 +30,23 @@ describe('Services/Balances', () => {
                 year: 2023,
             };
 
-            const currentBalancesMock = [
+            const currentBalancesMock: Array<Balance> = [
                 {
+                    _id: new mongoose.Schema.Types.ObjectId('63b9cc70705a4a72ced3f5d3'),
                     account: {
-                        _id: '123',
+                        _id: new mongoose.Schema.Types.ObjectId('63b9cc77f18245c1e38e9f13'),
                         name: 'Conta 1',
                         type: AccountType.CHECKING_ACCOUNT,
                         isMain: true,
                         user: {
-                            _id: '321',
+                            _id: new mongoose.Schema.Types.ObjectId('63b9cc7ddb6efa02347ffd5c'),
                             name: 'User 1',
                             email: 'email@email.com',
                         },
-                        month: Months.JANUARY,
-                        year: 2023,
-                        value: 230.1,
                     },
+                    month: Months.JANUARY,
+                    year: 2023,
+                    value: 230.1,
                 },
             ];
 

@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 import { AccountType } from '../../../utils/enums/accounts';
 import { Months } from '../../../utils/enums/date';
 
@@ -9,7 +11,7 @@ jest.mock('../../../database/models/Balance', () =>
     }))
 );
 
-import Model from '../../../database/models/Balance';
+import Model, { Balance } from '../../../database/models/Balance';
 import createBalance, { BalanceCreation } from './create-balance';
 
 describe('Services/Balances', () => {
@@ -17,12 +19,12 @@ describe('Services/Balances', () => {
         test('createBalance', async () => {
             const balanceCreation: BalanceCreation = {
                 account: {
-                    _id: '123',
+                    _id: new mongoose.Schema.Types.ObjectId('63b9ccddded659502ab36160'),
                     name: 'Conta 1',
                     type: AccountType.CHECKING_ACCOUNT,
                     isMain: true,
                     user: {
-                        _id: '321',
+                        _id: new mongoose.Schema.Types.ObjectId('63b9cce3158260fda43aed5b'),
                         name: 'User 1',
                         email: 'email@email.com',
                     },
@@ -32,15 +34,15 @@ describe('Services/Balances', () => {
                 value: 123.39,
             };
 
-            const createdBalanceMock = {
-                id: '12',
+            const createdBalanceMock: Balance = {
+                _id: new mongoose.Schema.Types.ObjectId('63b9ccddded659502ab36160'),
                 account: {
-                    _id: '123',
+                    _id: new mongoose.Schema.Types.ObjectId('63b9ccddded659502ab36160'),
                     name: 'Conta 1',
                     type: AccountType.CHECKING_ACCOUNT,
                     isMain: true,
                     user: {
-                        _id: '321',
+                        _id: new mongoose.Schema.Types.ObjectId('63b9cce3158260fda43aed5b'),
                         name: 'User 1',
                         email: 'email@email.com',
                     },

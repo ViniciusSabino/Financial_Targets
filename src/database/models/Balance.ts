@@ -1,9 +1,12 @@
-import { Document, model, Schema } from 'mongoose';
+import { model, ObjectId, Schema } from 'mongoose';
+
+import { Months } from '../../utils/enums/date';
 import { Account } from './Account';
 
-export interface Balance extends Document {
+export interface Balance {
+    _id: ObjectId;
     account: Account;
-    month: string;
+    month: Months;
     year: number;
     value: number;
 }
