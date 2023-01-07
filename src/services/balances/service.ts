@@ -4,7 +4,8 @@ import extendedError from '../../utils/errors/extendedError';
 import { DateInfo, getCurrentMonthName, getCurrentYear } from '../../utils/helpers/date';
 import { findAccountById } from '../accounts/queries';
 import { CurrentBalancesMapped, mapperCurrentBalances, BalanceMapped, mapperCreatedBalance } from './mapper';
-import { BalanceCreation, createBalance, findCurrentBalancesByUser } from './queries';
+import { createBalance, findCurrentBalancesByUser } from './queries';
+import { BalanceCreation } from './queries/create-balance';
 
 export interface BalanceInput {
     accountId: string;
