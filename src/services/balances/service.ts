@@ -1,3 +1,4 @@
+import { Balance } from '../../database/models/Balance';
 import { Months } from '../../utils/enums/date';
 import ErrorType from '../../utils/enums/errorType';
 import extendedError from '../../utils/errors/extendedError';
@@ -20,9 +21,9 @@ const getCurrentBalances = async (userId: string): Promise<CurrentBalancesMapped
         year: getCurrentYear(),
     };
 
-    const currentBalances = await findCurrentBalancesByUser(userId, dateInfo);
+    const currentBalances: Array<Balance> = await findCurrentBalancesByUser(userId, dateInfo);
 
-    const mappedBalances = mapperCurrentBalances(currentBalances, dateInfo);
+    const mappedBalances: CurrentBalancesMapped = mapperCurrentBalances(currentBalances, dateInfo);
 
     return mappedBalances;
 };
@@ -38,9 +39,9 @@ const create = async (balanceInput: BalanceInput): Promise<BalanceMapped> => {
             value: balanceInput.value,
         };
 
-        const balance = await createBalance(balanceCreation);
+        const balance: Balance = await createBalance(balanceCreation);
 
-        const balanceMapped = mapperCreatedBalance(balance);
+        const balanceMapped: BalanceMapped = mapperCreatedBalance(balance);
 
         return balanceMapped;
     } catch (err) {

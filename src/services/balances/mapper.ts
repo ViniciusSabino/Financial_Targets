@@ -25,7 +25,7 @@ export interface CurrentBalancesMapped {
 export interface BalanceMapped {
     id: ObjectId;
     accountId: ObjectId;
-    month: string;
+    month: Months;
     year: number;
     value: number;
 }
