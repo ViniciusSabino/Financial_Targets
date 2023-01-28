@@ -1,12 +1,14 @@
+import { ObjectId } from 'mongoose';
+
 import { Account } from '../../database/models/Account';
 import { AccountType } from '../../utils/enums/accounts';
 
 export interface AccountMapped {
-    id: string;
+    id: ObjectId;
     name: string;
     type: AccountType;
     isMain: boolean;
-    userId: string;
+    userId: ObjectId;
 }
 
 const mapAccount = (account: Account): AccountMapped => ({
