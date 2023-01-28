@@ -1,6 +1,7 @@
 import { Context, Next } from 'koa';
-import { findUserById } from '../services/common/user/queries';
 
+import { User } from '../database/models/User';
+import { findUserById } from '../services/common/user/queries';
 import ErrorType from '../utils/enums/errorType';
 import extendedError from '../utils/errors/extendedError';
 
@@ -10,15 +11,11 @@ const authentication = async (ctx: Context, next: Next): Promise<void> => {
     try {
         const userId = Array.isArray(userid) ? userid[0] : userid || '';
 
-        if (!userId) {
-            throw extendedError({ error: new Error('Missing Token'), type: ErrorType.UNAUTHORIZED });
-        }
+        if (!userId) throw extendedError({ error: new Error('Missing Token'), type: ErrorType.UNAUTHORIZED });
 
-        const user = await findUserById(userId);
+        const user: User = await findUserById(userId);
 
-        if (!user) {
-            throw extendedError({ error: new Error('User Not Found'), type: ErrorType.UNAUTHORIZED });
-        }
+        if (!user) throw extendedError({ error: new Error('User Not Found'), type: ErrorType.UNAUTHORIZED });
 
         ctx.user = { userId };
 
