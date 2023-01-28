@@ -14,8 +14,9 @@ export const createApp = (): Koa => {
     app.use(bodyParser());
     app.use(logger());
     app.use(errorHandling);
-    app.use(authentication);
     app.use(routes.public);
+    app.use(authentication);
+    app.use(routes.private);
 
     return app;
 };

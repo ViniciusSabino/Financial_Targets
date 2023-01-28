@@ -4,7 +4,7 @@ import controller from '../controllers/balances';
 
 const router = Router();
 
-router.prefix('/api/public/balances');
+router.prefix('/api/private/balances');
 
 router.route([
     {

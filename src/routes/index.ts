@@ -5,10 +5,10 @@ import homeRouter from './home';
 import balancesRouter from './balances';
 import accountsRouter from './accounts';
 
-const publicRoutes = [homeRouter, balancesRouter, accountsRouter];
-const privateRoutes: Array<Router> = [];
+const publicRoutes: Array<Router> = [homeRouter];
+const privateRoutes: Array<Router> = [balancesRouter, accountsRouter];
 
 export default {
     public: compose(publicRoutes.map((routes) => routes.middleware())),
-    private: privateRoutes,
+    private: compose(privateRoutes.map((routes) => routes.middleware())),
 };
