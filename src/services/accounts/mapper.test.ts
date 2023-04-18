@@ -1,63 +1,73 @@
+import { ObjectId } from 'mongodb';
+
 import { Account } from '../../database/models/Account';
 import { AccountType } from '../../utils/enums/accounts';
-import { mapperAccounts } from './mapper';
+import { mapAccount, mapAccounts } from './mapper';
 
 describe('Services/Accounts', () => {
     describe('Mapper', () => {
         it('should perform the mapping of an array of accounts', () => {
             const input: Array<Account> = [
                 {
-                    _id: '123',
+                    _id: new ObjectId('643f0e26ada4dc370289f80d'),
                     name: 'Teste 1',
                     type: AccountType.CHECKING_ACCOUNT,
                     isMain: true,
-                    user: { _id: '12', name: 'User 1', email: 'teste1@example.com' },
+                    user: {
+                        _id: new ObjectId('643f0e3d7ac4100aa91b6edf'),
+                        name: 'User 1',
+                        email: 'teste1@example.com',
+                    },
                 },
                 {
-                    _id: '321',
+                    _id: new ObjectId('643f0e33e76b9ca702931035'),
                     name: 'Teste 2',
                     type: AccountType.INVESTMENT,
                     isMain: true,
-                    user: { _id: '34', name: 'User 2', email: 'teste2@example.com' },
+                    user: {
+                        _id: new ObjectId('643f0e3d7ac4100aa91b6edf'),
+                        name: 'User 1',
+                        email: 'teste1@example.com',
+                    },
                 },
             ];
 
-            const mappedAccount = mapperAccounts(input);
+            const mappedAccount = mapAccounts(input);
 
             expect(mappedAccount).toStrictEqual([
                 {
-                    id: '123',
+                    id: new ObjectId('643f0e26ada4dc370289f80d'),
                     name: 'Teste 1',
                     type: AccountType.CHECKING_ACCOUNT,
                     isMain: true,
-                    userId: '12',
+                    userId: new ObjectId('643f0e3d7ac4100aa91b6edf'),
                 },
                 {
-                    id: '321',
+                    id: new ObjectId('643f0e33e76b9ca702931035'),
                     name: 'Teste 2',
                     type: AccountType.INVESTMENT,
                     isMain: true,
-                    userId: '34',
+                    userId: new ObjectId('643f0e3d7ac4100aa91b6edf'),
                 },
             ]);
         });
         it('should perform the mapping of an Account object', () => {
             const input: Account = {
-                _id: '123',
+                _id: new ObjectId('643f0e619a1b201232211c73'),
                 name: 'Teste 1',
                 type: AccountType.CHECKING_ACCOUNT,
                 isMain: true,
-                user: { _id: '12', name: 'User 1', email: 'teste1@example.com' },
+                user: { _id: new ObjectId('643f0e3d7ac4100aa91b6edf'), name: 'User 1', email: 'teste1@example.com' },
             };
 
-            const mappedAccount = mapperAccounts(input);
+            const mappedAccount = mapAccount(input);
 
             expect(mappedAccount).toStrictEqual({
-                id: '123',
+                id: new ObjectId('643f0e619a1b201232211c73'),
                 name: 'Teste 1',
                 type: AccountType.CHECKING_ACCOUNT,
                 isMain: true,
-                userId: '12',
+                userId: new ObjectId('643f0e3d7ac4100aa91b6edf'),
             });
         });
     });

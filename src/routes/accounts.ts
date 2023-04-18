@@ -5,7 +5,7 @@ import validators from '../validators/accounts/handler';
 
 const router = Router();
 
-router.prefix('/api/public/accounts');
+router.prefix('/api/private/accounts');
 
 router.route([
     {

@@ -12,10 +12,16 @@ const current = async (ctx: Context): Promise<void> => {
     ctx.body = currentBalances;
 };
 
+// TODO: Criar ou editar o saldo de uma conta
 const create = async (ctx: Context): Promise<void> => {
-    const { accountId, month, year, value } = ctx.request.body;
+    const { body } = ctx.request;
 
-    const balanceEntries: BalanceInput = { accountId, month, year, value };
+    const balanceEntries: BalanceInput = {
+        accountId: body.accountId,
+        month: body.month,
+        year: body.year,
+        value: body.value,
+    };
 
     const createdBalance: BalanceMapped = await service.create(balanceEntries);
 

@@ -2,6 +2,7 @@ import { Context } from 'koa';
 
 import { AccountType } from '../utils/enums/accounts';
 import service, { CheckingAccount } from '../services/accounts/service';
+import { AccountMapped } from '../services/accounts/mapper';
 
 const createCheckingAccount = async (ctx: Context): Promise<void> => {
     const { userId } = ctx.user;
@@ -12,7 +13,7 @@ const createCheckingAccount = async (ctx: Context): Promise<void> => {
         isMain: ctx.request.body.isMain,
     };
 
-    const createdAccount = await service.createCheckingAccount(checkingAccount, userId);
+    const createdAccount: AccountMapped = await service.createCheckingAccount(checkingAccount, userId);
 
     ctx.status = 200;
     ctx.body = createdAccount;
@@ -21,7 +22,7 @@ const createCheckingAccount = async (ctx: Context): Promise<void> => {
 const listAllAccounts = async (ctx: Context): Promise<void> => {
     const { userId } = ctx.user;
 
-    const accounts = await service.listAllAccounts(userId);
+    const accounts: Array<AccountMapped> = await service.listAllAccounts(userId);
 
     ctx.status = 200;
     ctx.body = accounts;

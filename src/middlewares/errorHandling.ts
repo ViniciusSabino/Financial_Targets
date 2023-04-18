@@ -9,7 +9,6 @@ const errorHandling = async (ctx: Context, next: Next): Promise<void> => {
         if (err instanceof ApiError) {
             ctx.status = err.status;
             ctx.body = {
-                name: err.name,
                 type: err.type,
                 message: err.message,
             };

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 import { Account } from '../../../database/models/Account';
 import { Balance } from '../../../database/models/Balance';
@@ -11,14 +11,14 @@ import { CurrentBalancesMapped } from '../mapper';
 
 const currentBalancesMock: Array<Balance> = [
     {
-        _id: new mongoose.Schema.Types.ObjectId('63b9cc70705a4a72ced3f5d3'),
+        _id: new ObjectId('63b9cc70705a4a72ced3f5d3'),
         account: {
-            _id: new mongoose.Schema.Types.ObjectId('63b9cc77f18245c1e38e9f13'),
+            _id: new ObjectId('63b9cc77f18245c1e38e9f13'),
             name: 'Conta 1',
             type: AccountType.CHECKING_ACCOUNT,
             isMain: true,
             user: {
-                _id: new mongoose.Schema.Types.ObjectId('63d159109ad982563932543c'),
+                _id: new ObjectId('63d159109ad982563932543c'),
                 name: 'User 1',
                 email: 'email@email.com',
             },
@@ -34,8 +34,8 @@ const mappedBalancesResult: CurrentBalancesMapped = {
     year: 2023,
     accounts: [
         {
-            id: new mongoose.Schema.Types.ObjectId('63b9cc70705a4a72ced3f5d3'),
-            accountId: new mongoose.Schema.Types.ObjectId('63b9cc77f18245c1e38e9f13'),
+            id: new ObjectId('63b9cc70705a4a72ced3f5d3'),
+            accountId: new ObjectId('63b9cc77f18245c1e38e9f13'),
             name: 'Conta 1',
             type: CurrentBalanceTypes.ACCOUNT,
             value: 230.1,
@@ -48,26 +48,26 @@ const mappedBalancesResult: CurrentBalancesMapped = {
 // Create Mocks
 
 const accountMock: Account = {
-    _id: new mongoose.Schema.Types.ObjectId('63b9cc77f18245c1e38e9f13'),
+    _id: new ObjectId('63b9cc77f18245c1e38e9f13'),
     name: 'Conta A',
     type: AccountType.CHECKING_ACCOUNT,
     isMain: true,
     user: {
-        _id: new mongoose.Schema.Types.ObjectId('63d1951f02987b243e9102cf'),
+        _id: new ObjectId('63d1951f02987b243e9102cf'),
         name: 'Vinícius Rocha',
         email: 'email@contato.com',
     },
 };
 
 const balanceMock: Balance = {
-    _id: new mongoose.Schema.Types.ObjectId('63b9cc70705a4a72ced3f5d3'),
+    _id: new ObjectId('63b9cc70705a4a72ced3f5d3'),
     account: {
-        _id: new mongoose.Schema.Types.ObjectId('63b9cc77f18245c1e38e9f13'),
+        _id: new ObjectId('63b9cc77f18245c1e38e9f13'),
         name: 'Conta A',
         type: AccountType.CHECKING_ACCOUNT,
         isMain: true,
         user: {
-            _id: new mongoose.Schema.Types.ObjectId('63d1951f02987b243e9102cf'),
+            _id: new ObjectId('63d1951f02987b243e9102cf'),
             name: 'Vinícius Rocha',
             email: 'email@contato.com',
         },

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 import { Months } from '../../utils/enums/date';
 import ErrorType from '../../utils/enums/errorType';
@@ -65,8 +65,8 @@ describe('Services/Balances', () => {
             expect(findAccountByIdFn).toHaveBeenCalledWith(balanceInput.accountId);
             expect(mapperCreatedBalanceSpy).toHaveBeenCalledWith(balanceMock);
             expect(balanceMapped).toEqual({
-                id: new mongoose.Schema.Types.ObjectId('63b9cc70705a4a72ced3f5d3'),
-                accountId: new mongoose.Schema.Types.ObjectId('63b9cc77f18245c1e38e9f13'),
+                id: new ObjectId('63b9cc70705a4a72ced3f5d3'),
+                accountId: new ObjectId('63b9cc77f18245c1e38e9f13'),
                 month: Months.APRIL,
                 year: 2022,
                 value: 390.39,

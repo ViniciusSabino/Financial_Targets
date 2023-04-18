@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 import { AccountType } from '../../../utils/enums/accounts';
 import { Months } from '../../../utils/enums/date';
@@ -19,12 +19,12 @@ describe('Services/Balances', () => {
         test('createBalance', async () => {
             const balanceCreation: BalanceCreation = {
                 account: {
-                    _id: new mongoose.Schema.Types.ObjectId('63b9ccddded659502ab36160'),
+                    _id: new ObjectId('63b9ccddded659502ab36160'),
                     name: 'Conta 1',
                     type: AccountType.CHECKING_ACCOUNT,
                     isMain: true,
                     user: {
-                        _id: new mongoose.Schema.Types.ObjectId('63b9cce3158260fda43aed5b'),
+                        _id: new ObjectId('63b9cce3158260fda43aed5b'),
                         name: 'User 1',
                         email: 'email@email.com',
                     },
@@ -35,14 +35,14 @@ describe('Services/Balances', () => {
             };
 
             const createdBalanceMock: Balance = {
-                _id: new mongoose.Schema.Types.ObjectId('63b9ccddded659502ab36160'),
+                _id: new ObjectId('63b9ccddded659502ab36160'),
                 account: {
-                    _id: new mongoose.Schema.Types.ObjectId('63b9ccddded659502ab36160'),
+                    _id: new ObjectId('63b9ccddded659502ab36160'),
                     name: 'Conta 1',
                     type: AccountType.CHECKING_ACCOUNT,
                     isMain: true,
                     user: {
-                        _id: new mongoose.Schema.Types.ObjectId('63b9cce3158260fda43aed5b'),
+                        _id: new ObjectId('63b9cce3158260fda43aed5b'),
                         name: 'User 1',
                         email: 'email@email.com',
                     },

@@ -38,6 +38,6 @@ export class ApiError extends Error {
     }
 }
 
-export default (params: ExtendedError) => {
+export default (params: ExtendedError): void => {
     throw new ApiError(params);
 };

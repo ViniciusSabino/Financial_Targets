@@ -1,4 +1,5 @@
-import { model, ObjectId, Schema } from 'mongoose';
+import { ObjectId } from 'mongodb';
+import { model, Schema } from 'mongoose';
 
 import { AccountType } from '../../utils/enums/accounts';
 import { User } from './User';

@@ -8,10 +8,12 @@ const app = createApp();
 
 createMongoDBConnection();
 
-app.listen(config.port, () =>
-    console.log(`\n API: ${chalk.blue('Financial Targets - Accounts API')}
+if (config.environment !== 'test') {
+    app.listen(config.port, () =>
+        console.log(`\n API: ${chalk.blue('Financial Targets - Accounts API')}
  Running on port: ${chalk.blue(config.port)}
  Environment: ${chalk.blue(config.environment)}`)
-);
+    );
+}
 
 export { app };

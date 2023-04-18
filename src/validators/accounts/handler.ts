@@ -10,7 +10,7 @@ const validCreateCheckingAccount = async (ctx: Context, next: Next): Promise<voi
     try {
         await createCheckingAccountSchema.validateAsync({ ...ctx.request.body, userId });
     } catch (error) {
-        throw extendedError({ error: error as Error, type: ErrorType.VALIDATION_ERROR });
+        extendedError({ error: error as Error, type: ErrorType.VALIDATION_ERROR });
     }
 
     await next();

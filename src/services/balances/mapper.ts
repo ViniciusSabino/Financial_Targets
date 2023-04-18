@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 import { Balance } from '../../database/models/Balance';
 import { AccountType } from '../../utils/enums/accounts';
