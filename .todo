@@ -1,21 +1,21 @@
 PROXIMA TAREFA
 
-PARTIALLY PAYMENT 
+PARTIALLY PAYMENT
 
 - Recebe um amountPaid Novo
-- Recupera o accountAtual no banco 
+- Recupera o accountAtual no banco
 
-1. CASO O ACCOUNT ESTEJA DONE 
+1. CASO O ACCOUNT ESTEJA DONE
 - Se o amountPaid for o mesmo então mantem tudo como está
-- Se o amountPaid for menor então 
+- Se o amountPaid for menor então
     - Se a data para pagar for menor do que a data atual então atualiza também o status da conta para EXPIRED
     - Se a data para pagar for maior ou igual a data atual então atualiza também o status da conta para PENDING
-- Não permitir AMOUNT_PAID > VALOR DA CONTA 
+- Não permitir AMOUNT_PAID > VALOR DA CONTA
 
 - (FEITO) Criar um objeto onde somente ele terá a relação de quais campos uma conta possui (usar esse objeto no get-filterable-fields) (No mesmo arquivo criar um array com o nome de todos os campos de uma conta (accountAllFields))
 
 - VALIDAÇÃO DINAMICA DO JOI PARA 1 OU N CAMPOS DE UMA CONTA (MONTA O SCHEMA COM BASE NO QUE VIER NA REQUEST NO BODY)
-- 1 - SE NÃO VIER NADA NO BODY ENTÃO RESPONDE UM 404 
+- 1 - SE NÃO VIER NADA NO BODY ENTÃO RESPONDE UM 404
 - 2 - SE VIER PELO MENOS 1 CAMPO QUE NÃO FAÇA PARTE DE UMA CONTA ENTÃO RETORNA UM ERRO 400
 - nesse objeto que irá retornar a relação dos campos, para cada campo ter uma propriedade nome e a propriedade joiValidator com a validação do schema para aquele campo
 - (FEITO) criar uma função onde eu passo um array de string (name do campo) e retorne seu schema montado com base nos joiValidator
@@ -47,5 +47,5 @@ ENDPOINT DE REACULAR
 
 - ELE RECAULCULA AS CONTAS DO USUÁRIO COM BASE NA DATA DA SOLICITAÇÃO (PODE SER CHAMADO SEMPRE ANTES DE CADA LOGIN (1 VEZ POR DIA APENAS))
 1 - ATUALIZA AS CONTAS PARA EXPIRADO CASO PASSOU O TEMPO E ELE NÃO PAGOU
-2 - CASO EXISTA CONTAS COM O STATUS DONE ENTÃO FAZ A VIRADA DA CONTA PARA O MÊS ATUAL (MES DO LOGIN) E SETA PARA AMOUNT_PAID = 0 E STATUS PENDIND (CASO PARA O MÊS ATUAL NÃO ESTÁ EXPIRADO) OU 
+2 - CASO EXISTA CONTAS COM O STATUS DONE ENTÃO FAZ A VIRADA DA CONTA PARA O MÊS ATUAL (MES DO LOGIN) E SETA PARA AMOUNT_PAID = 0 E STATUS PENDIND (CASO PARA O MÊS ATUAL NÃO ESTÁ EXPIRADO) OU
 PARA EXPIRADO (CASO PARA O MÊS ATUAL ELE JÁ ESTÁ EXPIRADA)

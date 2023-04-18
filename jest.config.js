@@ -24,4 +24,5 @@ module.exports = {
     testMatch: ['**/src/**/*+(spec|test).[jt]s?(x)'],
     preset: 'ts-jest',
     verbose: true,
+    setupFiles: ['<rootDir>/.jest/setEnvVars.ts'],
 };
