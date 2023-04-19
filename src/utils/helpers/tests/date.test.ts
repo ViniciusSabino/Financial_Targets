@@ -13,13 +13,13 @@ describe('Utils/Helpers', () => {
         });
 
         describe('getMonthNameByNumber', () => {
-            test('deveria retornar um mês em string quando informado um número de mês válido', () => {
+            test('should return a month in string when given a valid month number', () => {
                 const monthName: Months = getMonthNameByNumber(12);
 
                 expect(monthName).toEqual(Months.DECEMBER);
             });
 
-            test('deveria retornar "JANUARY" quando informado um número de mês inválido', () => {
+            test('should return "JANUARY" when given an invalid month number', () => {
                 const monthName: Months = getMonthNameByNumber(13);
 
                 expect(monthName).toEqual(Months.JANUARY);
@@ -27,7 +27,7 @@ describe('Utils/Helpers', () => {
         });
 
         describe('getCurrentMonth', () => {
-            test('deveria retornar o número do mês com base na data atual', () => {
+            test('should return month number based on current date', () => {
                 const month = getCurrentMonth();
 
                 expect(month).toEqual(2);
@@ -35,7 +35,7 @@ describe('Utils/Helpers', () => {
         });
 
         describe('getCurrentMonthName', () => {
-            test('deveria retornar o nome do mês atual', () => {
+            test('should return the name of the current month', () => {
                 const month = getCurrentMonthName();
 
                 expect(month).toEqual(Months.FEBRUARY);
@@ -43,7 +43,7 @@ describe('Utils/Helpers', () => {
         });
 
         describe('getCurrentYear', () => {
-            test('deveria retornar o ano atual', () => {
+            test('should return the current year', () => {
                 const year = getCurrentYear();
 
                 expect(year).toEqual(2023);
