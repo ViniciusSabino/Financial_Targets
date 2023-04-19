@@ -1,19 +1,22 @@
+/* eslint-disable max-lines */
+
 import request from 'supertest';
-import { app } from '../../server';
-import config from '../../config';
-import HttpStatus from '../../utils/enums/httpStatus';
-import { createCheckingAccountSchema } from './schemas';
-import ErrorType from '../../utils/enums/errorType';
-import service from '../../services/accounts/service';
-import { AccountType } from '../../utils/enums/accounts';
-import { findUserById } from '../../services/common/user/queries';
-import { User } from '../../database/models/User';
 import { ObjectId } from 'mongodb';
 
-jest.mock('../../database/mongodb');
-jest.mock('./schemas');
-jest.mock('../../services/common/user/queries');
-jest.mock('../../services/accounts/service');
+import { app } from '../../../server';
+import config from '../../../config';
+import HttpStatus from '../../../utils/enums/httpStatus';
+import { createCheckingAccountSchema } from '../schemas';
+import ErrorType from '../../../utils/enums/errorType';
+import service from '../../../services/accounts/service';
+import { AccountType } from '../../../utils/enums/accounts';
+import { findUserById } from '../../../services/common/user/queries';
+import { User } from '../../../database/models/User';
+
+jest.mock('../../../database/mongodb');
+jest.mock('../schemas');
+jest.mock('../../../services/common/user/queries');
+jest.mock('../../../services/accounts/service');
 
 const validateAsyncMock = createCheckingAccountSchema.validateAsync as jest.Mock;
 const createCheckingAccountMock = service.createCheckingAccount as jest.Mock;
@@ -27,6 +30,8 @@ const user: User = {
     email: 'email@test.com',
 };
 
+const API_BASE_URL = '/api/private/accounts';
+
 describe('Validators/Accounts', () => {
     afterAll(() => {
         server.close();
@@ -38,12 +43,38 @@ describe('Validators/Accounts', () => {
             jest.clearAllMocks();
         });
 
+        test('should return an UNAUTHORIZED error when the token is not provided', async () => {
+            const response = await request(server).post(`${API_BASE_URL}/checking/create`).send({
+                name: 'Account 1',
+                IsMain: true,
+            });
+            //.set('userId', '642af20b563a13c68d14b225');
+
+            expect(response.status).toEqual(HttpStatus.UNAUTHORIZED);
+            expect(response.body).toEqual({ message: 'Missing Token', type: ErrorType.UNAUTHORIZED });
+        });
+
+        test('should return an UNAUTHORIZED error when the given token does not belong to any user', async () => {
+            findUserByIdMock.mockResolvedValue(null);
+
+            const response = await request(server)
+                .post(`${API_BASE_URL}/checking/create`)
+                .send({
+                    name: 'Account 1',
+                    IsMain: true,
+                })
+                .set('userId', '642af20b563a13c68d14b225');
+
+            expect(response.status).toEqual(HttpStatus.UNAUTHORIZED);
+            expect(response.body).toEqual({ message: 'User Not Found', type: ErrorType.UNAUTHORIZED });
+        });
+
         test('should return a BAD_REQUEST error when trying to create an account without a required field', async () => {
             validateAsyncMock.mockRejectedValue(new Error('Missing isMain'));
             findUserByIdMock.mockResolvedValue(user);
 
             const response = await request(server)
-                .post('/api/private/accounts/checking/create')
+                .post(`${API_BASE_URL}/checking/create`)
                 .send({
                     name: 'Account 1',
                     //IsMain: true,
@@ -66,7 +97,7 @@ describe('Validators/Accounts', () => {
             });
 
             const response = await request(server)
-                .post('/api/private/accounts/checking/create')
+                .post(`${API_BASE_URL}/checking/create`)
                 .send({
                     name: 'Account 1',
                     isMain: true,

@@ -9,7 +9,7 @@ export interface AccountCreation {
     user: User;
 }
 
-const createAccount = async (accountCreation: AccountCreation): Promise<Account> => {
+const create = async (accountCreation: AccountCreation): Promise<Account> => {
     const model = new AccountModel(accountCreation);
 
     const createdAccount = await model.save();
@@ -17,16 +17,16 @@ const createAccount = async (accountCreation: AccountCreation): Promise<Account>
     return createdAccount;
 };
 
-const getAllAccounts = async (user: User): Promise<Array<Account>> => {
+const getAll = async (user: User): Promise<Array<Account>> => {
     const accounts: Array<Account> = await AccountModel.find({ user }).lean();
 
     return accounts;
 };
 
-const findAccountById = async (id: string): Promise<Account> => {
+const findById = async (id: string): Promise<Account> => {
     const account = await AccountModel.findById(id).lean();
 
     return account as Account;
 };
 
-export { createAccount, getAllAccounts, findAccountById };
+export default { create, getAll, findById };

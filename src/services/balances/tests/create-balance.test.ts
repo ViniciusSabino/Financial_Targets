@@ -12,7 +12,7 @@ jest.mock('../../../database/models/Balance', () =>
 );
 
 import Model, { Balance } from '../../../database/models/Balance';
-import createBalance, { BalanceCreation } from './create-balance';
+import createBalance, { BalanceCreation } from '../queries/create-balance';
 
 describe('Services/Balances', () => {
     describe('Queries', () => {

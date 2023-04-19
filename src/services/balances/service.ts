@@ -3,9 +3,9 @@ import { Months } from '../../utils/enums/date';
 import ErrorType from '../../utils/enums/errorType';
 import extendedError from '../../utils/errors/extendedError';
 import { DateInfo, getCurrentMonthName, getCurrentYear } from '../../utils/helpers/date';
-import { findAccountById } from '../accounts/queries';
+import accountQuery from '../accounts/queries';
 import { CurrentBalancesMapped, mapperCurrentBalances, BalanceMapped, mapperCreatedBalance } from './mapper';
-import { createBalance, findCurrentBalancesByUser } from './queries';
+import query from './queries';
 import { BalanceCreation } from './queries/create-balance';
 
 export interface BalanceInput {
@@ -21,7 +21,7 @@ const getCurrentBalances = async (userId: string): Promise<CurrentBalancesMapped
         year: getCurrentYear(),
     };
 
-    const currentBalances: Array<Balance> = await findCurrentBalancesByUser(userId, dateInfo);
+    const currentBalances: Array<Balance> = await query.findCurrentByUser(userId, dateInfo);
 
     const mappedBalances: CurrentBalancesMapped = mapperCurrentBalances(currentBalances, dateInfo);
 
@@ -30,7 +30,7 @@ const getCurrentBalances = async (userId: string): Promise<CurrentBalancesMapped
 
 const create = async (balanceInput: BalanceInput): Promise<BalanceMapped> => {
     try {
-        const account = await findAccountById(balanceInput.accountId);
+        const account = await accountQuery.findById(balanceInput.accountId);
 
         const balanceCreation: BalanceCreation = {
             account,
@@ -39,7 +39,7 @@ const create = async (balanceInput: BalanceInput): Promise<BalanceMapped> => {
             value: balanceInput.value,
         };
 
-        const balance: Balance = await createBalance(balanceCreation);
+        const balance: Balance = await query.create(balanceCreation);
 
         const balanceMapped: BalanceMapped = mapperCreatedBalance(balance);
 

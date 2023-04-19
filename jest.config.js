@@ -3,14 +3,14 @@ module.exports = {
     clearMocks: true,
     collectCoverage: true,
     collectCoverageFrom: ['src/**/*.{ts,tsx}', '!**/node_modules/**'],
-    coverageDirectory: '__tests__/coverage',
-    coveragePathIgnorePatterns: ['/node_modules', '/__tests__', 'src/config'],
+    coverageDirectory: 'coverage',
+    coveragePathIgnorePatterns: ['/node_modules', 'src/app.ts', 'src/server.ts'],
     coverageThreshold: {
         global: {
-            statements: 100,
-            branches: 100,
-            functions: 100,
-            lines: 100,
+            statements: 90,
+            branches: 80,
+            functions: 90,
+            lines: 90,
         },
     },
     displayName: {

@@ -1,4 +1,4 @@
-import createBalance from './create-balance';
-import findCurrentBalancesByUser from './find-current-balances';
+import create from './create-balance';
+import findCurrentByUser from './find-current-balances';
 
-export { createBalance, findCurrentBalancesByUser };
+export default { create, findCurrentByUser };

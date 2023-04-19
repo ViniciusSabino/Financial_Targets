@@ -3,17 +3,18 @@
 import request from 'supertest';
 import { ObjectId } from 'mongodb';
 
-import config from '../config';
-import { app } from '../server';
-import service, { BalanceInput } from '../services/balances/service';
-import { Months } from '../utils/enums/date';
-import { User } from '../database/models/User';
-import { findUserById } from '../services/common/user/queries';
-import { CurrentBalanceTypes } from '../utils/enums/balances';
+import config from '../../config';
+import { app } from '../../server';
+import service, { BalanceInput } from '../../services/balances/service';
+import { Months } from '../../utils/enums/date';
+import { User } from '../../database/models/User';
+import { findUserById } from '../../services/common/user/queries';
+import { CurrentBalanceTypes } from '../../utils/enums/balances';
+import HttpStatus from '../../utils/enums/httpStatus';
 
-jest.mock('../database/mongodb');
-jest.mock('../services/balances/service');
-jest.mock('../services/common/user/queries');
+jest.mock('../../database/mongodb');
+jest.mock('../../services/balances/service');
+jest.mock('../../services/common/user/queries');
 
 const findUserByIdFn = findUserById as jest.Mock;
 const getCurrentBalancesFn = service.getCurrentBalances as jest.Mock;
@@ -63,7 +64,7 @@ describe('Controller/Balances', () => {
             });
 
             expect(getCurrentBalancesFn).toHaveBeenCalledWith('62019c68cfdad112f35788e4');
-            expect(response.status).toBe(200);
+            expect(response.status).toBe(HttpStatus.OK);
             expect(response.body).toEqual({
                 month: Months.JANUARY,
                 year: 2023,
@@ -114,6 +115,7 @@ describe('Controller/Balances', () => {
                 .send(balanceEntries);
 
             expect(createFn).toHaveBeenCalledWith(balanceEntries);
+            expect(response.status).toEqual(HttpStatus.OK);
             expect(response.body).toEqual({
                 id: '63b9cc70705a4a72ced3f5d3',
                 accountId: '63b9cc77f18245c1e38e9f13',

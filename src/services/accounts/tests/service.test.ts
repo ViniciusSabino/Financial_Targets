@@ -2,32 +2,32 @@
 
 import { ObjectId } from 'mongodb';
 
-import { AccountType } from '../../utils/enums/accounts';
-import service, { CheckingAccount } from './service';
-import { User } from '../../database/models/User';
-import { Account } from '../../database/models/Account';
-import { AccountMapped, mapAccounts, mapAccount } from './mapper';
-import { findUserById } from '../common/user/queries';
-import { createAccount, getAllAccounts } from './queries';
+import { AccountType } from '../../../utils/enums/accounts';
+import service, { CheckingAccount } from '../service';
+import { User } from '../../../database/models/User';
+import { Account } from '../../../database/models/Account';
+import { AccountMapped, mapAccounts, mapAccount } from '../mapper';
+import { findUserById } from '../../common/user/queries';
+import query from '../queries';
 
-jest.mock('../common/user/queries', () => ({
+jest.mock('../../common/user/queries', () => ({
     findUserById: jest.fn(),
 }));
 
-jest.mock('./queries', () => ({
-    createAccount: jest.fn(),
-    getAllAccounts: jest.fn(),
+jest.mock('../queries', () => ({
+    create: jest.fn(),
+    getAll: jest.fn(),
 }));
 
-jest.mock('./mapper', () => ({
+jest.mock('../mapper', () => ({
     mapAccount: jest.fn(),
     mapAccounts: jest.fn(),
 }));
 
 const findUserByIdMock = findUserById as jest.Mock;
 
-const createAccountMock = createAccount as jest.Mock;
-const getAllAccountsMock = getAllAccounts as jest.Mock;
+const createAccountMock = query.create as jest.Mock;
+const getAllAccountsMock = query.getAll as jest.Mock;
 
 const mapAccountMock = mapAccount as jest.Mock;
 const mapAccountsMock = mapAccounts as jest.Mock;
@@ -35,7 +35,7 @@ const mapAccountsMock = mapAccounts as jest.Mock;
 describe('Services/Accounts', () => {
     describe('Service', () => {
         test('createCheckingAccount', async () => {
-            const userId = '123';
+            const userId = '62019c68cfdad112f35788e4';
             const checkingAccount: CheckingAccount = {
                 name: 'Account 1',
                 type: AccountType.CHECKING_ACCOUNT,
@@ -78,7 +78,7 @@ describe('Services/Accounts', () => {
         });
 
         test('listAllAccounts', async () => {
-            const userId = '1';
+            const userId = '62019c68cfdad112f35788e4';
 
             const user: User = {
                 _id: new ObjectId('62019c68cfdad112f35788e4'),

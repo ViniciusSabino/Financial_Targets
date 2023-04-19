@@ -19,7 +19,7 @@ jest.mock('../../../database/models/Balance', () => ({
     find: findFn,
 }));
 
-import findCurrentBalancesByUser from './find-current-balances';
+import findCurrentBalancesByUser from '../queries/find-current-balances';
 
 describe('Services/Balances', () => {
     describe('Queries', () => {

@@ -25,17 +25,6 @@ export class ApiError extends Error {
         this.stacktrace = params.stacktrace;
         this.type = params.type;
     }
-
-    toJSON() {
-        return {
-            error: {
-                name: this.name,
-                message: this.message,
-                stacktrace: this.stacktrace,
-                type: this.type,
-            },
-        };
-    }
 }
 
 export default (params: ExtendedError): void => {

@@ -1,12 +1,12 @@
 import { ObjectId } from 'mongodb';
 
-import { Account } from '../../database/models/Account';
-import { AccountType } from '../../utils/enums/accounts';
-import { mapAccount, mapAccounts } from './mapper';
+import { Account } from '../../../database/models/Account';
+import { AccountType } from '../../../utils/enums/accounts';
+import { mapAccount, mapAccounts } from '../mapper';
 
 describe('Services/Accounts', () => {
     describe('Mapper', () => {
-        it('should perform the mapping of an array of accounts', () => {
+        test('should perform the mapping of an array of accounts', () => {
             const input: Array<Account> = [
                 {
                     _id: new ObjectId('643f0e26ada4dc370289f80d'),
@@ -51,7 +51,7 @@ describe('Services/Accounts', () => {
                 },
             ]);
         });
-        it('should perform the mapping of an Account object', () => {
+        test('should perform the mapping of an Account object', () => {
             const input: Account = {
                 _id: new ObjectId('643f0e619a1b201232211c73'),
                 name: 'Teste 1',

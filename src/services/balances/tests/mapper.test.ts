@@ -1,11 +1,11 @@
 import { ObjectId } from 'mongodb';
 
-import { AccountType } from '../../utils/enums/accounts';
-import { Months } from '../../utils/enums/date';
-import { CurrentBalancesMapped, mapperCurrentBalances } from './mapper';
-import { DateInfo } from '../../utils/helpers/date';
-import { Balance } from '../../database/models/Balance';
-import { CurrentBalanceTypes } from '../../utils/enums/balances';
+import { AccountType } from '../../../utils/enums/accounts';
+import { Months } from '../../../utils/enums/date';
+import { CurrentBalancesMapped, mapperCurrentBalances } from '../mapper';
+import { DateInfo } from '../../../utils/helpers/date';
+import { Balance } from '../../../database/models/Balance';
+import { CurrentBalanceTypes } from '../../../utils/enums/balances';
 
 describe('Services/Balances', () => {
     describe('Mapper', () => {

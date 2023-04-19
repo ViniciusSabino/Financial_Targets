@@ -1,6 +1,6 @@
 import { findUserById } from '../common/user/queries';
 import { AccountType } from '../../utils/enums/accounts';
-import { AccountCreation, createAccount, getAllAccounts } from './queries';
+import query, { AccountCreation } from './queries';
 import { AccountMapped, mapAccount, mapAccounts } from './mapper';
 
 export interface CheckingAccount {
@@ -14,7 +14,7 @@ const createCheckingAccount = async (checkingAccount: CheckingAccount, userId: s
 
     const accountCreation: AccountCreation = { ...checkingAccount, user };
 
-    const account = await createAccount(accountCreation);
+    const account = await query.create(accountCreation);
 
     return mapAccount(account);
 };
@@ -22,7 +22,7 @@ const createCheckingAccount = async (checkingAccount: CheckingAccount, userId: s
 const listAllAccounts = async (userId: string): Promise<Array<AccountMapped>> => {
     const user = await findUserById(userId);
 
-    const accounts = await getAllAccounts(user);
+    const accounts = await query.getAll(user);
 
     const accountsMapped = mapAccounts(accounts);
 

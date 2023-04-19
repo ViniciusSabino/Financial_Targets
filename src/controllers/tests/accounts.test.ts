@@ -3,17 +3,18 @@
 import { ObjectId } from 'mongodb';
 import request from 'supertest';
 
-import config from '../config';
-import { User } from '../database/models/User';
-import { app } from '../server';
-import { AccountMapped } from '../services/accounts/mapper';
-import service from '../services/accounts/service';
-import { findUserById } from '../services/common/user/queries';
-import { AccountType } from '../utils/enums/accounts';
+import config from '../../config';
+import { User } from '../../database/models/User';
+import { app } from '../../server';
+import { AccountMapped } from '../../services/accounts/mapper';
+import service from '../../services/accounts/service';
+import { findUserById } from '../../services/common/user/queries';
+import { AccountType } from '../../utils/enums/accounts';
+import HttpStatus from '../../utils/enums/httpStatus';
 
-jest.mock('../database/mongodb');
-jest.mock('../services/accounts/service');
-jest.mock('../services/common/user/queries');
+jest.mock('../../database/mongodb');
+jest.mock('../../services/accounts/service');
+jest.mock('../../services/common/user/queries');
 
 const createCheckingAccountFn = service.createCheckingAccount as jest.Mock;
 const listAllAccountsFn = service.listAllAccounts as jest.Mock;
@@ -67,7 +68,7 @@ describe('Controller/Accounts', () => {
                 { isMain: true, name: 'Account 1', type: AccountType.CHECKING_ACCOUNT },
                 '62019c68cfdad112f35788e4'
             );
-            expect(response.status).toBe(200);
+            expect(response.status).toBe(HttpStatus.OK);
             expect(response.body).toEqual({
                 id: '642b271e4ac7dac0aa4ce3e9',
                 name: 'Account 1',
@@ -111,7 +112,7 @@ describe('Controller/Accounts', () => {
             });
 
             expect(listAllAccountsFn).toHaveBeenCalledWith('62019c68cfdad112f35788e4');
-            expect(response.status).toBe(200);
+            expect(response.status).toBe(HttpStatus.OK);
             expect(response.body).toEqual([
                 {
                     id: '642b271e4ac7dac0aa4ce3e9',

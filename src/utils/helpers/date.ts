@@ -21,7 +21,7 @@ const getMonthNameByNumber = (number: number): Months =>
         12: Months.DECEMBER,
     }[number] || Months.JANUARY);
 
-const getCurrentMonth = (): number => new Date().getMonth() + 1;
+const getCurrentMonth = (): number => new Date().getMonth();
 
 const getCurrentMonthName = (): Months => {
     const monthNumber = getCurrentMonth();
