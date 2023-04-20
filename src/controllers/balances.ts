@@ -13,11 +13,11 @@ const current = async (ctx: Context): Promise<void> => {
     ctx.body = currentBalances;
 };
 
-// TODO: Criar ou editar uma conta
 const create = async (ctx: Context): Promise<void> => {
     const { body } = ctx.request;
 
     const balanceEntries: BalanceInput = {
+        id: body.id,
         accountId: body.accountId,
         month: body.month,
         year: body.year,

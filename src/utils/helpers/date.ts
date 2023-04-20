@@ -26,7 +26,7 @@ const getCurrentMonth = (): number => new Date().getMonth();
 const getCurrentMonthName = (): Months => {
     const monthNumber = getCurrentMonth();
 
-    return getMonthNameByNumber(monthNumber);
+    return getMonthNameByNumber(monthNumber + 1);
 };
 
 const getCurrentYear = (): number => new Date().getFullYear();

@@ -6,13 +6,14 @@ import { DateInfo, getCurrentMonthName, getCurrentYear } from '../../utils/helpe
 import accountQuery from '../accounts/queries';
 import { CurrentBalancesMapped, mapperCurrentBalances, BalanceMapped, mapperCreatedBalance } from './mapper';
 import query from './queries';
-import { BalanceCreation } from './queries/create-balance';
+import { BalanceCreation } from './queries/create-or-update-balance';
 
 export interface BalanceInput {
-    accountId: string;
-    month: Months;
-    year: number;
-    value: number;
+    id?: string;
+    accountId?: string;
+    month?: Months;
+    year?: number;
+    value?: number;
 }
 
 const getCurrentBalances = async (userId: string): Promise<CurrentBalancesMapped> => {
@@ -29,24 +30,25 @@ const getCurrentBalances = async (userId: string): Promise<CurrentBalancesMapped
 };
 
 const create = async (balanceInput: BalanceInput): Promise<BalanceMapped> => {
-    try {
-        const account = await accountQuery.findById(balanceInput.accountId);
+    const account = await accountQuery.findById(balanceInput.accountId || '');
 
-        const balanceCreation: BalanceCreation = {
-            account,
-            month: balanceInput.month,
-            year: balanceInput.year,
-            value: balanceInput.value,
-        };
-
-        const balance: Balance = await query.create(balanceCreation);
-
-        const balanceMapped: BalanceMapped = mapperCreatedBalance(balance);
-
-        return balanceMapped;
-    } catch (err) {
-        throw extendedError({ error: err as Error, type: ErrorType.CREATE_BALANCE_ERROR });
+    if (!balanceInput.id && !account) {
+        throw extendedError({ error: new Error('Account is invalid'), type: ErrorType.CREATE_BALANCE_ERROR });
     }
+
+    const balanceCreation: BalanceCreation = {
+        id: balanceInput.id,
+        account,
+        month: balanceInput.month,
+        year: balanceInput.year,
+        value: balanceInput.value,
+    };
+
+    const balance: Balance = await query.createOrUpdate(balanceCreation);
+
+    const balanceMapped: BalanceMapped = mapperCreatedBalance(balance);
+
+    return balanceMapped;
 };
 
 export default { create, getCurrentBalances };

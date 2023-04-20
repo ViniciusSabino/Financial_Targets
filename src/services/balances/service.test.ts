@@ -1,3 +1,5 @@
+/* eslint-disable jest/no-conditional-expect */
+/* eslint-disable no-undefined */
 /* eslint-disable max-lines */
 
 import { ObjectId } from 'mongodb';
@@ -6,7 +8,8 @@ import { AccountType } from '../../utils/enums/accounts';
 import { CurrentBalanceTypes } from '../../utils/enums/balances';
 import { Months } from '../../utils/enums/date';
 import ErrorType from '../../utils/enums/errorType';
-import * as error from '../../utils/errors/extendedError';
+import HttpStatus from '../../utils/enums/httpStatus';
+import { ExtendedError } from '../../utils/errors/apiError';
 import * as mapper from './mapper';
 
 const findCurrentBalancesByUserFn = jest.fn();
@@ -20,7 +23,7 @@ jest.mock('../../utils/helpers/date', () => ({
 
 jest.mock('./queries', () => ({
     findCurrentByUser: findCurrentBalancesByUserFn,
-    create: createBalanceFn,
+    createOrUpdate: createBalanceFn,
 }));
 
 jest.mock('../accounts/queries', () => ({
@@ -104,7 +107,7 @@ describe('Services/Balances', () => {
             });
         });
 
-        test('Create', async () => {
+        test('Create: should properly create a balance', async () => {
             const balanceInput: BalanceInput = {
                 accountId: '63b9cc77f18245c1e38e9f13',
                 month: Months.APRIL,
@@ -171,37 +174,28 @@ describe('Services/Balances', () => {
             });
         });
 
-        test('Create with create-balance-error', async () => {
+        test('Create: should return an error if an id for balance (editing) and an account (creation) is not informed', async () => {
             const balanceInput: BalanceInput = {
-                accountId: '63b9cc77f18245c1e38e9f13',
                 month: Months.APRIL,
                 year: 2022,
                 value: 390.39,
             };
 
-            findAccountByIdFn.mockResolvedValue({
-                _id: new ObjectId('63b9cc77f18245c1e38e9f13'),
-                name: 'Conta A',
-                type: AccountType.CHECKING_ACCOUNT,
-                isMain: true,
-                user: {
-                    _id: new ObjectId('63d1951f02987b243e9102cf'),
-                    name: 'Vinícius Rocha',
-                    email: 'email@contato.com',
-                },
-            });
-            createBalanceFn.mockRejectedValue(new Error('Error Create'));
+            findAccountByIdFn.mockResolvedValue(null);
+
             const mapperCreatedBalanceSpy = jest.spyOn(mapper, 'mapperCreatedBalance');
-            const extendedErrorSpy = jest.spyOn(error, 'default');
 
-            await expect(service.create(balanceInput)).rejects.toThrowError('Error Create');
+            try {
+                await service.create(balanceInput);
+            } catch (err) {
+                const error = err as ExtendedError;
+                expect(error.message).toEqual('Account is invalid');
+                expect(error.type).toEqual(ErrorType.CREATE_BALANCE_ERROR);
+                expect(error.status).toEqual(HttpStatus.BAD_REQUEST);
+            }
 
-            expect(extendedErrorSpy).toHaveBeenCalledWith({
-                error: Error('Error Create'),
-                type: ErrorType.CREATE_BALANCE_ERROR,
-            });
-            expect(findAccountByIdFn).toHaveBeenCalledWith(balanceInput.accountId);
             expect(mapperCreatedBalanceSpy).not.toBeCalled();
+            expect(findAccountByIdFn).toHaveBeenCalledWith('');
         });
     });
 });

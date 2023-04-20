@@ -9,19 +9,15 @@ import extendedError from '../utils/errors/extendedError';
 const authentication = async (ctx: Context, next: Next): Promise<void> => {
     const { userid } = ctx.request.headers;
 
-    try {
-        const userId = Array.isArray(userid) ? userid[0] : userid || '';
+    const userId = Array.isArray(userid) ? userid[0] : userid || '';
 
-        if (!userId) throw new Error('Missing Token');
+    if (!userId) throw extendedError({ error: new Error('Missing Token'), type: ErrorType.UNAUTHORIZED });
 
-        const user: User = await findUserById(userId);
+    const user: User = await findUserById(userId);
 
-        if (!user) throw new Error('User Not Found');
+    if (!user) throw extendedError({ error: new Error('User Not Found'), type: ErrorType.UNAUTHORIZED });
 
-        ctx.user = { userId };
-    } catch (err) {
-        throw extendedError({ error: err as Error, type: ErrorType.UNAUTHORIZED });
-    }
+    ctx.user = { userId };
 
     await next();
 };

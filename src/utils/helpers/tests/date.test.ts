@@ -38,7 +38,7 @@ describe('Utils/Helpers', () => {
             test('should return the name of the current month', () => {
                 const month = getCurrentMonthName();
 
-                expect(month).toEqual(Months.FEBRUARY);
+                expect(month).toEqual(Months.MARCH);
             });
         });
 

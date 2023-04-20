@@ -1,3 +1,5 @@
+/* eslint-disable no-undefined */
+
 import AccountModel, { Account } from '../../database/models/Account';
 import { User } from '../../database/models/User';
 import { AccountType } from '../../utils/enums/accounts';
@@ -23,10 +25,10 @@ const getAll = async (user: User): Promise<Array<Account>> => {
     return accounts;
 };
 
-const findById = async (id: string): Promise<Account> => {
-    const account = await AccountModel.findById(id).lean();
+const findById = async (id: string): Promise<Account | undefined> => {
+    const account = await AccountModel.findById<Account>(id).lean();
 
-    return account as Account;
+    return account || undefined;
 };
 
 export default { create, getAll, findById };
